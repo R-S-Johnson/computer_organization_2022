@@ -44,7 +44,7 @@ char print_menu(void) {
     short need_input = 1;
     char choice;
     while (need_input){
-        char valid_input [6] = "OHCSQ";
+        char valid_input [6] = "OHDCSQ";
         printf("Please select one of the following options:\n\n");
         printf("O  Octal Mode\n");
         printf("H  Hexadecimal Mode\n");
@@ -56,7 +56,7 @@ char print_menu(void) {
 
         char input [10];
         scanf("%s", &input);
-        printf("%s\n", input);
+        printf("%s\n\n", input);
         choice = toupper(input[0]);
 
         if (strlen(input) > 1 || !strchr(valid_input, choice)) {
@@ -80,7 +80,7 @@ int main(void) {
         switch (menu_choice) {
             case 'Q': run = 0; break;
             case 'S': acc_value = get_operand(mode); break;
-            case 'C': acc_value = 0; mode = 'D'; break;
+            case 'C': acc_value = 0; break;
             case 'H': mode = 'H'; printf("Mode is Hexadecimal\n\n"); break;
             case 'O': mode = 'O'; printf("Mode is Octal\n\n"); break;
             case 'D': mode = 'D'; printf("Mode is Decimal\n\n"); break;
