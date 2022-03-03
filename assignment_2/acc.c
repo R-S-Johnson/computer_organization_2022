@@ -47,7 +47,7 @@ char print_menu(void) {
         char valid_input [6] = "OHCSQ";
         printf("Please select one of the following options:\n\n");
         printf("O  Octal Mode\n");
-        printf("H  Hexidecimal Mode\n");
+        printf("H  Hexadecimal Mode\n");
         printf("D  Decimal Mode\n\n");
         printf("C  Clear Accumulator\n");
         printf("S  Set Accumulator\n\n");
