@@ -7,19 +7,19 @@ short get_operand(char mode) {
         case 'D': {
             printf("Enter decimal value: ");
             scanf("%hd", &input);
-            printf("%hd\n", input);
+            printf("%hd\n\n", input);
             break;
         }
         case 'H': {
             printf("Enter hex value: ");
             scanf("%hX", &input);
-            printf("%hX\n", input);
+            printf("%hX\n\n", input);
             break;
         }
         case 'O': {
             printf("Enter octal value: ");
             scanf("%ho", &input);
-            printf("%ho\n", input);
+            printf("%ho\n\n", input);
             break;
         }
     }
@@ -44,7 +44,7 @@ char print_menu(void) {
     short need_input = 1;
     char choice;
     while (need_input){
-        char valid_input [6] = "OHDCSQ";
+        char valid_input [7] = "OHDCSQ";
         printf("Please select one of the following options:\n\n");
         printf("O  Octal Mode\n");
         printf("H  Hexadecimal Mode\n");
@@ -56,7 +56,7 @@ char print_menu(void) {
 
         char input [10];
         scanf("%s", &input);
-        printf("%s\n\n", input);
+        printf("%s\n", input);
         choice = toupper(input[0]);
 
         if (strlen(input) > 1 || !strchr(valid_input, choice)) {
