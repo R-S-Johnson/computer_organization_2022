@@ -28,6 +28,16 @@ short get_operand(char mode) {
 
 void print_acc(short acc, char mode) {
 
+    printf("****************************************\n");
+    switch (mode) {
+        case 'D': printf("* Accumulator:         Input Mode: Dec *\n"); break;
+        case 'H': printf("* Accumulator:         Input Mode: Hex *\n"); break;
+        case 'O': printf("* Accumulator:         Input Mode: Oct *\n"); break;
+    }
+    printf("*   Hex     :  %04X                    *\n", acc);
+    printf("*   Octal   :  %06o                  *\n", acc);
+    printf("*   Decimal :  %-10d              *\n", acc);
+    printf("****************************************\n\n");
 }
 
 char print_menu(void) {
