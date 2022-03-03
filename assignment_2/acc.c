@@ -60,7 +60,7 @@ char print_menu(void) {
         choice = toupper(input[0]);
 
         if (strlen(input) > 1 || !strchr(valid_input, choice)) {
-            printf("Invalid option: %s\n\n", input);
+            printf("\nInvalid option: %s\n\n", input);
         } else {
             need_input = 0;
         }
@@ -80,7 +80,7 @@ int main(void) {
         switch (menu_choice) {
             case 'Q': run = 0; break;
             case 'S': acc_value = get_operand(mode); break;
-            case 'C': acc_value = 0; break;
+            case 'C': printf("\n"); acc_value = 0; break;
             case 'H': mode = 'H'; printf("Mode is Hexadecimal\n\n"); break;
             case 'O': mode = 'O'; printf("Mode is Octal\n\n"); break;
             case 'D': mode = 'D'; printf("Mode is Decimal\n\n"); break;
