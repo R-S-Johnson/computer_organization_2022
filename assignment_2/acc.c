@@ -6,20 +6,20 @@ short get_operand(char mode) {
     switch (mode) {
         case 'D': {
             printf("Enter decimal value: ");
-            scanf("%d", &input);
-            printf("%d\n", input);
+            scanf("%hd", &input);
+            printf("%hd\n", input);
             break;
         }
         case 'H': {
             printf("Enter hex value: ");
-            scanf("%X", &input);
-            printf("%X\n", input);
+            scanf("%hX", &input);
+            printf("%hX\n", input);
             break;
         }
         case 'O': {
             printf("Enter octal value: ");
-            scanf("%o", &input);
-            printf("%o\n", input);
+            scanf("%ho", &input);
+            printf("%ho\n", input);
             break;
         }
     }
@@ -47,7 +47,8 @@ char print_menu(void) {
         char valid_input [6] = "OHCSQ";
         printf("Please select one of the following options:\n\n");
         printf("O  Octal Mode\n");
-        printf("H  Hexidecimal Mode\n\n");
+        printf("H  Hexidecimal Mode\n");
+        printf("D  Decimal Mode\n\n");
         printf("C  Clear Accumulator\n");
         printf("S  Set Accumulator\n\n");
         printf("Q  Quit\n\n");
@@ -64,9 +65,25 @@ char print_menu(void) {
             need_input = 0;
         }
     }
-    return choice;
+    return toupper(choice);
 }
 
 int main(void) {
+    short run = 1;
+    short acc_value = 0;
+    char mode = 'D';
 
+    while (run) {
+        print_acc(acc_value, mode);
+        char menu_choice = print_menu();
+
+        switch (menu_choice) {
+            case 'Q': run = 0; break;
+            case 'S': acc_value = get_operand(mode); break;
+            case 'C': acc_value = 0; mode = 'D'; break;
+            case 'H': mode = 'H'; printf("Mode is Hexadecimal\n\n"); break;
+            case 'O': mode = 'O'; printf("Mode is Octal\n\n"); break;
+            case 'D': mode = 'D'; printf("Mode is Decimal\n\n"); break;
+        }
+    }
 }
