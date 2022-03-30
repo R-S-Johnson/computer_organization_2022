@@ -71,6 +71,30 @@ char print_menu(void) {
     return toupper(choice);
 }
 
+void add(short *acc, char mode) {
+    short temp = *acc;
+    short add_var = get_operand(mode);
+    *acc += add_var;
+    if (temp > 0 && add_var > 0 && *acc < 0) {
+        printf("Positive Overflow");
+    }
+    else if (temp < 0 && add_var < 0 && *acc > 0) {
+        printf("Negative Overflow");
+    }
+}
+
+void subtract(short *acc, char mode) {
+    short temp = *acc;
+    short sub_var = get_operand(mode);
+    *acc -= sub_var;
+    if (temp > 0 && sub_var < 0 && *acc < 0) {
+        printf("Positive Overflow");
+    }
+    else if (temp < 0 && sub_var > 0 && *acc > 0) {
+        printf("Negative Overflow");
+    }
+}
+
 int main(void) {
     short run = 1;
     short acc_value = 0;
@@ -87,6 +111,41 @@ int main(void) {
             case 'H': mode = 'H'; printf("Mode is Hexadecimal\n\n"); break;
             case 'O': mode = 'O'; printf("Mode is Octal\n\n"); break;
             case 'D': mode = 'D'; printf("Mode is Decimal\n\n"); break;
+            case 'N': acc_value = -acc_value; break;
+            case '~': acc_value = ~acc_value; break;
+            case '<': {
+                int shift;
+                printf("Enter number of positions to left shift accumulator: ");
+                scanf("%d", &shift);
+                printf("%d\n", shift);
+                acc_value <<= shift;
+                break;
+            }
+            case '>': {
+                int shift;
+                printf("Enter number of positions to right shift accumulator: ");
+                scanf("%d", &shift);
+                printf("%d\n", shift);
+                acc_value >>= shift;
+                break;
+            }
+            case '&': {
+                short compare_value = get_operand(mode);
+                acc_value &= compare_value;
+                break;
+            }
+            case '|': {
+                short compare_value = get_operand(mode);
+                acc_value |= compare_value;
+                break;
+            }
+            case '^': {
+                short compare_value = get_operand(mode);
+                acc_value ^= compare_value;
+                break;
+            }
+            case '+': add(&acc_value, mode); break;
+            case '-': subtract(&acc_value, mode); break;
         }
     }
 }
