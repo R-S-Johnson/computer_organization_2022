@@ -28,11 +28,11 @@ short get_operand(char mode) {
             break;
         }
         case 'B': {
-            char char_input[16];
+//            char char_input[16];
             printf("Enter binary value: ");
-            scanf("%s", &char_input);
-            printf("%s\n\n", char_input);
-            input = get_binary_op(char_input);
+//            scanf("%s", &char_input);
+//            printf("%s\n\n", char_input);
+//            input = get_binary_op(char_input);
         }
     }
     return input;
@@ -89,32 +89,32 @@ char print_menu(void) {
 void add(short *acc, char mode) {
     short temp = *acc;
     short add_var = get_operand(mode);
-    *acc += add_var;
-    if (temp > 0 && add_var > 0 && *acc < 0) {
-        printf("Positive Overflow\n");
+//    *acc += add_var;
+//    if (temp > 0 && add_var > 0 && *acc < 0) {
+//        printf("Positive Overflow\n");
     }
-    else if (temp < 0 && add_var < 0 && *acc > 0) {
-        printf("Negative Overflow\n");
+//    else if (temp < 0 && add_var < 0 && *acc > 0) {
+//        printf("Negative Overflow\n");
     }
 }
 
 void subtract(short *acc, char mode) {
     short temp = *acc;
     short sub_var = get_operand(mode);
-    *acc -= sub_var;
-    if (temp > 0 && sub_var < 0 && *acc < 0) {
-        printf("Positive Overflow\n");
+//    *acc -= sub_var;
+//    if (temp > 0 && sub_var < 0 && *acc < 0) {
+//        printf("Positive Overflow\n");
     }
-    else if (temp < 0 && sub_var > 0 && *acc > 0) {
-        printf("Negative Overflow\n");
+//    else if (temp < 0 && sub_var > 0 && *acc > 0) {
+//        printf("Negative Overflow\n");
     }
 }
 
 unsigned short get_binary_op(char *bin) {
     unsigned to_return = 0;
     short count = 1;
-    for (int i = strlen(bin) - 1; i >= 0; i--) {
-        if (bin[i] == '1') {
+//    for (int i = strlen(bin) - 1; i >= 0; i--) {
+//        if (bin[i] == '1') {
             to_return += count;
         }
         count *= 2;
@@ -122,16 +122,17 @@ unsigned short get_binary_op(char *bin) {
     return to_return;
 }
 
+
 void convert_to_binary(short acc, char *bin) {
-    unsigned short acc_us = (unsigned) acc;
+//    unsigned short acc_us = (unsigned) acc;
     unsigned power_tracker = 32768;
     for (int i = 0; i < 20; i++) {
         if ((i + 1)%5 == 0 || i == 19) {
             continue;
         }
-        if (acc_us >= power_tracker) {
+//        if (acc_us >= power_tracker) {
             bin[i] = '1';
-            acc_us -= power_tracker;
+//            acc_us -= power_tracker;
         }
         power_tracker /= 2;
     }
