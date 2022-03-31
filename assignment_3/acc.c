@@ -61,7 +61,7 @@ char print_menu(void) {
     short need_input = 1;
     char choice;
     while (need_input){
-        char valid_input [16] = "OHDCSQ&|^~><+-N";
+        char valid_input [17] = "OHDCSQ&|^~><+-NB";
         printf("Please select one of the following options:\n\n");
         printf("B  Binary Mode             &  AND with Accumulator           +  Add to Accumulator\n");
         printf("O  Octal Mode              |  OR  with Accumulator           -  Subtract from Accumulator\n");
@@ -123,14 +123,15 @@ unsigned short get_binary_op(char *bin) {
 }
 
 void convert_to_binary(short acc, char *bin) {
-    long power_tracker = 32768;
+    unsigned acc_us = (unsigned) acc;
+    unsigned power_tracker = 32768;
     for (int i = 0; i < 20; i++) {
         if ((i + 1)%5 == 0 || i == 19) {
             continue;
         }
-        if (acc >= power_tracker) {
+        if (acc_us >= power_tracker) {
             bin[i] = '1';
-            acc -= power_tracker;
+            acc_us -= power_tracker;
         }
         power_tracker /= 2;
     }
