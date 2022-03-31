@@ -123,7 +123,7 @@ unsigned short get_binary_op(char *bin) {
 }
 
 void convert_to_binary(short acc, char *bin) {
-    unsigned acc_us = (unsigned) acc;
+    unsigned short acc_us = (unsigned) acc;
     unsigned power_tracker = 32768;
     for (int i = 0; i < 20; i++) {
         if ((i + 1)%5 == 0 || i == 19) {
