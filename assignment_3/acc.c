@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+#include "calc.h"
+
+unsigned short get_binary_op(char *bin);
+void convert_to_binary(short acc, char *bin);
 
 short get_operand(char mode) {
     short input;
@@ -22,11 +27,21 @@ short get_operand(char mode) {
             printf("%ho\n\n", input);
             break;
         }
+        case 'B': {
+            char char_input;
+            printf("Enter binary value: ");
+            scanf("%c", &char_input);
+            printf("%c\n\n", char_input);
+            input = get_binary_op(&char_input);
+        }
     }
     return input;
 }
 
 void print_acc(short acc, char mode) {
+
+    bin_str bin = {'0', '0', '0', '0', ' ', '0', '0', '0', '0', ' ', '0', '0', '0', '0', ' ', '0', '0', '0', '0', '\0'};
+    convert_to_binary(acc, bin);
 
     printf("****************************************\n");
     switch (mode) {
@@ -35,7 +50,7 @@ void print_acc(short acc, char mode) {
         case 'H': printf("* Accumulator:         Input Mode: Hex *\n"); break;
         case 'O': printf("* Accumulator:         Input Mode: Oct *\n"); break;
     }
-    printf("*   Binary  :  0000 0000 0000 0000     *\n", acc);
+    printf("*   Binary  :  %s     *\n", bin);
     printf("*   Hex     :  %04hX                    *\n", acc);
     printf("*   Octal   :  %06ho                  *\n", acc);
     printf("*   Decimal :  %-10hd              *\n", acc);
@@ -46,7 +61,7 @@ char print_menu(void) {
     short need_input = 1;
     char choice;
     while (need_input){
-        char valid_input [7] = "OHDCSQ&|^~><+-N";
+        char valid_input [16] = "OHDCSQ&|^~><+-N";
         printf("Please select one of the following options:\n\n");
         printf("B  Binary Mode             &  AND with Accumulator           +  Add to Accumulator\n");
         printf("O  Octal Mode              |  OR  with Accumulator           -  Subtract from Accumulator\n");
@@ -74,11 +89,11 @@ char print_menu(void) {
 void add(short *acc, char mode) {
     short temp = *acc;
     short add_var = get_operand(mode);
-    *acc += add_var;
-    if (temp > 0 && add_var > 0 && *acc < 0) {
+    acc += add_var;
+    if (temp > 0 && add_var > 0 && acc < 0) {
         printf("Positive Overflow");
     }
-    else if (temp < 0 && add_var < 0 && *acc > 0) {
+    else if (temp < 0 && add_var < 0 && acc > 0) {
         printf("Negative Overflow");
     }
 }
@@ -86,12 +101,38 @@ void add(short *acc, char mode) {
 void subtract(short *acc, char mode) {
     short temp = *acc;
     short sub_var = get_operand(mode);
-    *acc -= sub_var;
-    if (temp > 0 && sub_var < 0 && *acc < 0) {
+    acc -= sub_var;
+    if (temp > 0 && sub_var < 0 && acc < 0) {
         printf("Positive Overflow");
     }
-    else if (temp < 0 && sub_var > 0 && *acc > 0) {
+    else if (temp < 0 && sub_var > 0 && acc > 0) {
         printf("Negative Overflow");
+    }
+}
+
+unsigned short get_binary_op(char *bin) {
+    unsigned to_return = 0;
+    short count = 1;
+    for (int i = sizeof(bin)/sizeof(char) - 1; i >= 0; i--) {
+        if (bin[i] == 1) {
+            to_return += count;
+        }
+        count *= 2;
+    }
+    return to_return;
+}
+
+void convert_to_binary(short acc, char *bin) {
+    long power_tracker = 32768;
+    for (int i = 0; i < 20; i++) {
+        if ((i + 1)%5 == 0 || i == 19) {
+            continue;
+        }
+        if (acc >= power_tracker) {
+            bin[i] = '1';
+            acc -= power_tracker;
+        }
+        power_tracker /= 2;
     }
 }
 
@@ -111,6 +152,7 @@ int main(void) {
             case 'H': mode = 'H'; printf("Mode is Hexadecimal\n\n"); break;
             case 'O': mode = 'O'; printf("Mode is Octal\n\n"); break;
             case 'D': mode = 'D'; printf("Mode is Decimal\n\n"); break;
+            case 'B': mode = 'B'; printf("Mode is Binary\n\n"); break;
             case 'N': acc_value = -acc_value; break;
             case '~': acc_value = ~acc_value; break;
             case '<': {
