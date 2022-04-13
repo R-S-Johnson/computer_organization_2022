@@ -31,7 +31,7 @@ addl %eax, %esp # Multi loop var ++
 
 rrmovl %esp, %eax # Store the multi loop var to be overwritten
 subl %ebp, %eax # if Multi loop var - sum loop var <= 0
-jle multiLoop # keep looping multiplication
+jl multiLoop # keep looping multiplication
 
 endMultiLoop:
 
@@ -40,8 +40,8 @@ irmovl $1, %eax
 addl %eax, %ebp # sum loop var ++
 
 rrmovl %ebp, %eax
-subl %edi, %eax # if sum loop var - main loop variable < 0
-jl sumLoop # Keep looping summing
+subl %edi, %eax # if sum loop var - main loop variable <= 0
+jle sumLoop # Keep looping summing
 
 
 irmovl output, %edx
