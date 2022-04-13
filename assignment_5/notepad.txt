@@ -1,0 +1,9 @@
+
+eax: random register
+ecx: random register 2
+edx: memory register
+ebx: memory offset register
+esp: Multiplication loop
+ebp: sum loop
+esi: toReturn value
+edi: main move loop (i)

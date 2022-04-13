@@ -1,0 +1,73 @@
+.pos 0x0
+
+irmovl $0, %ebx # Output memory offset
+
+irmovl $0, %edi  # Set the main loop variable (i)
+mainLoop:
+
+irmovl $0, %esi # Set the toReturn value
+
+
+irmovl $0, %ebp # Set the sum loop variable
+sumLoop:
+
+irmovl data, %edx
+mrmovl 4(%edx), %eax # Grab b from memory
+addl %eax, %esi # toReturn += b
+
+
+irmovl $0, %esp # Multiplication loop variable
+multiLoop:
+
+rrmovl %esp, %eax # store to be overwritten
+addl %ebp, %eax # checking to see if the sum loop is zero
+je endMultiLoop # Jump to the end of the loop
+
+mrmovl (%edx), %eax # Grab a from memory
+addl %eax, %esi # toReturn += a
+
+irmovl $1, %eax
+addl %eax, %esp # Multi loop var ++
+
+rrmovl %esp, %eax # Store the multi loop var to be overwritten
+subl %ebp, %eax # if Multi loop var - sum loop var <= 0
+jle multiLoop # keep looping multiplication
+
+endMultiLoop:
+
+
+irmovl $1, %eax
+addl %eax, %ebp # sum loop var ++
+
+rrmovl %ebp, %eax
+subl %edi, %eax # if sum loop var - main loop variable < 0
+jl sumLoop # Keep looping summing
+
+
+irmovl output, %edx
+addl %ebx, %edx # edx holds next output place in memory
+rmmovl %esi, (%edx) # output[i] = toReturn
+
+irmovl $4, %eax
+addl %eax, %ebx
+
+irmovl $1, %eax
+addl %eax, %edi # main loop ++
+
+rrmovl %edi, %eax
+mrmovl 8(%edx), %ecx
+subl %ecx, %eax # if main loop var - m < 0
+jl mainLoop
+
+halt
+
+
+
+.align 4
+
+data:
+.long 8  # a
+.long -3  # b
+.long 10  # m
+
+output:
