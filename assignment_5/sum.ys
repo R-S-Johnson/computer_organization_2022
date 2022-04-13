@@ -54,6 +54,7 @@ addl %eax, %ebx
 irmovl $1, %eax
 addl %eax, %edi # main loop ++
 
+irmovl data, %edx
 rrmovl %edi, %eax
 mrmovl 8(%edx), %ecx
 subl %ecx, %eax # if main loop var - m < 0
