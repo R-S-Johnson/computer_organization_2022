@@ -7,21 +7,27 @@ int m = 10;
 
 int summation(int n) {
     int toReturn = 0;
-    for (int i = 0; i <= n; i++) {
+    int i = 0;
+    while (i <= n) {
         toReturn += b;
-        for (int j = 0; j < i; j++) {
+        int j = 0;
+        while (j < i) {
             toReturn += a;
+            j++;
         }
+        i++;
     }
     return toReturn;
 }
 
 int main(int argc, char const *argv[]) {
-    for (int i = 0; i < m; i++) {
+    int i = 0;
+    while (i < m) {
         printf("%-2d ", i);
         printf("%-2x :", i);
         int output = summation(i);
         printf("   %-3d   ", output);
         printf("%08x\n", output);
+        i++;
     }
 }
