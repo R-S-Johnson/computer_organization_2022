@@ -49,7 +49,7 @@ addl %ebx, %edx # edx holds next output place in memory
 rmmovl %esi, (%edx) # output[i] = toReturn
 
 irmovl $4, %eax
-addl %eax, %ebx
+addl %eax, %ebx # increment offset
 
 irmovl $1, %eax
 addl %eax, %edi # main loop ++
