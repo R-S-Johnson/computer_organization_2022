@@ -1,0 +1,78 @@
+.pos 0x0
+
+irmovl $0, %ebx # Output memory offset
+
+irmovl $0, %edi # Set loop variable (x)
+
+
+mainloop:
+
+irmovl $0, %esi # Set t value
+irmovl $0, %ebp # Set i value
+
+
+sumloop:
+
+irmovl data, %edx # Putting memory location of data in edx
+mrmovl 4(%edx), %eax # Take b from memory
+addl %eax, %esi # t += b
+
+irmovl $0, %esp # Multiplication loop variable (j)
+
+
+multiloop:
+
+rrmovl %esp, %eax # Store so it can be overwritten
+addl %ebp, %eax # Checking if the sum loop = 0
+je endMultiloop # Jump to the end of the loop
+
+mrmovl (%edx), %eax # Take a from memory
+addl %eax, %esi # t += a
+
+irmovl $1, %eax
+addl %eax, %esp # j++
+
+rrmovl %esp, %eax # Store j to be overwritten
+subl %ebp, %eax # If j - i <= 0
+jl multiloop # Loop multiplication
+
+endMultiloop:
+
+
+irmovl $1, %eax
+addl %eax, %ebp # i++
+
+rrmovl %ebp, %eax
+subl %edi, %eax # If i - x <= 0
+jle sumloop # Keep looping summation
+
+
+irmovl output, %edx
+addl %ebx, %edx # edx holds next output place in memory
+rmmovl %esi, (%edx) # outpit[i] = t
+
+irmovl $4, %eax
+addl %eax, %ebx # Increment offset
+
+irmovl $1, %eax
+addl %eax, %edi # x++
+
+irmovl data, %edx
+rrmovl %edi, %eax
+mrmovl 8(%edx), %ecx
+subl %ecx, %eax # If x - m , 0
+jl mainloop
+
+halt
+
+
+
+
+.align 4
+
+data:
+.long 8
+.long -3
+.long 10
+
+output:
