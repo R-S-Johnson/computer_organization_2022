@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include "contact.h"
 #include "contact_list.h"
 #include "utils.h"
