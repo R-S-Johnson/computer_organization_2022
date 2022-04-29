@@ -28,13 +28,13 @@ void print_contact(CONTACT_T * contact, char mode) {
         printf("%18s", contact->last_name);
         printf("%18s", contact->first_name);
         printf("%15s", contact->phone1);
-        printf("%s", contact->email);
+        printf("%s\n", contact->email);
     }
     else {
-        printf("Name:    %s %s", contact->first_name, contact->last_name);
-        printf("Address: %s", contact->addr);
-        printf("Phone:   %s (primary)  %s", contact->phone1, contact->phone2);
-        printf("email:   %s", contact->email);
-        printf("web:     %s", contact->web);
+        printf("Name:    %s %s\n", contact->first_name, contact->last_name);
+        printf("Address: %s\n", contact->addr);
+        printf("Phone:   %s (primary)  %s\n", contact->phone1, contact->phone2);
+        printf("email:   %s\n", contact->email);
+        printf("web:     %s\n", contact->web);
     }
 }
