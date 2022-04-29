@@ -63,8 +63,8 @@ char print_format_menu(void){
 }
 
 void find_individual(char mode) {
-    char * firstName [15];
-    char * lastName [15];
+    char firstName [15];
+    char lastName [15];
     printf("Please enter last name: ");
     scanf("%s", &lastName);
     printf("%s\n", lastName);
@@ -105,7 +105,7 @@ void process_state_contacts(char mode) {
     print_state_contacts(stateChoice, mode);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     char mode = 'C';
     if (argc != 2) {

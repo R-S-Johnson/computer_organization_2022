@@ -1,8 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-const int TRUE = 1;
-const int FALSE = 0;
+#define TRUE = 1;
+#define FALSE = 0;
 
 void upper(char str[]);
 
