@@ -7,7 +7,7 @@
 
 void process_file(char * filename) {
     FILE *fp;
-    fp = fopen(filename, 'r');
+    fp = fopen(filename, "r");
 
     fscanf(fp,"%*s\n");
 
@@ -63,8 +63,8 @@ char print_format_menu(void){
 }
 
 void find_individual(char mode) {
-    NAME_T * firstName;
-    NAME_T * lastName;
+    char * firstName [15];
+    char * lastName [15];
     printf("Please enter last name: ");
     scanf("%s", &lastName);
     printf("%s\n", lastName);
