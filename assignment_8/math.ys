@@ -1,0 +1,22 @@
+.pos 0x0
+
+movl stack, %esp # set the stack pointer
+
+
+
+
+
+.align 4
+
+input:
+.long 3
+.long -5
+.long -4
+.long 7
+.long 0
+
+output:
+
+
+.pos 0x400
+stack:
