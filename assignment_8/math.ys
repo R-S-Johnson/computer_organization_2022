@@ -1,8 +1,163 @@
 .pos 0x0
 
-movl stack, %esp # set the stack pointer
+irmovl stack, %esp # set the stack pointer
+
+irmovl $0, %edi # offset for input
+irmovl $0, %esi # offset for output
+
+mainLoop:
+
+irmovl input, %eax
+addl %edi, %eax
+mrmovl (%eax), %ecx
+pushl %ecx # grab input and push it onto the stack
+call abs # calculate and store abs value of num in eax
+
+irmovl output, %edx
+addl %esi, %edx
+rmmovl %eax, (%edx) # put in output
+
+rrmovl %eax, %ecx # put output in input reg for future use
+
+irmovl $4, %eax
+addl %eax, %esi # increment output
+
+irmovl $1, %eax
+andl %ecx, %eax
+je callMult # if even, jump to calling mult
+
+pushl %ecx
+call rfact # Call rfact to return value through eax
+
+irmovl output, %edx
+addl %esi, %edx
+rmmovl %eax, (%edx) # put in output
+
+rrmovl %eax, %ecx # put in input reg
+
+irmovl $4, %eax
+addl %eax, %esi # incrememt output
+
+jmp endIf
 
 
+callMult:
+pushl %ecx # push input value twice
+pushl %ecx
+call mult
+
+irmovl output, %edx
+addl %esi, %edx
+rmmovl %eax, (%edx) # put in output
+
+rrmovl %eax, %ecx # put in input reg
+
+irmovl $4, %eax
+addl %eax, %esi # incrememt output
+
+
+endIf:
+irmovl $4, %eax
+addl %eax, %edi #increment input
+
+irmovl input, %eax
+addl %edi, %eax
+mrmovl (%eax), %edx #grab next input
+
+irmovl $0, %eax
+addl %edx, %eax # if next input is not zero, keep looping
+jne mainLoop
+
+halt
+
+
+
+
+abs:
+pushl %ebp
+rrmovl %esp, %ebp # setup
+
+mrmovl 8(%ebp), %ecx # grab parameter
+irmovl $0, %eax
+addl %ecx, %eax
+jl returnPositive # if num >= 0
+
+rrmovl %ecx, %eax
+
+popl %ebp
+ret # return itself through eax
+
+returnPositive:
+rrmovl %ecx, %eax
+subl %eax, %ecx
+subl %eax, %ecx
+
+popl %ebp
+ret # return itself minus 2*itself
+
+
+mult:
+pushl %ebp
+rrmovl %esp, %ebp # setup
+pushl %edi
+pushl %ebx
+
+mrmovl 12(%ebp), %ebx # grab parameter 1
+mrmovl 8(%ebp), %ecx # Grab parameter 2
+
+irmovl $0, %eax
+addl %ebx, %eax
+je endMult # if zero, jump to end
+
+irmovl $0, %eax # toReturn
+irmovl $0, %edx # Multiplication loop var
+multLoop:
+
+addl %ecx, %eax #add
+
+irmovl $1, %edi
+addl %edi, %edx # increment loop var
+
+rrmovl %ebx, %edi # copy input 2
+subl %edx, %edi
+jne  multLoop
+
+endMult:
+pup %ebx
+popl %edi
+popl %ebp
+ret
+
+
+rfact:
+pushl %ebp
+rrmovl %esp, %ebp # setup
+
+mrmovl 8(%ebp), %ecx # grab parameter
+
+irmovl $1, %edx
+subl %ecx, %edx # if input = 1
+je recCall
+
+irmovl $1, %eax
+
+popl %ebp
+ret
+
+recCall:
+
+pushl %ecx # push input onto stack
+
+irmovl $1, %eax
+subl %eax, %ecx #decrement input
+
+call rfact
+
+pushl %eax
+call mult
+
+# at this point eax has our output valud
+ret
 
 
 

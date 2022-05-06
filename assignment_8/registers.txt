@@ -1,0 +1,11 @@
+caller-save
+eax - bs reg/output reg
+edx - loop var
+ecx - input reg
+
+calli-save
+ebx
+esi - offset for output
+edi - offset for input / bs in functions
+
+stack

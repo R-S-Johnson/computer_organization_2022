@@ -21,8 +21,8 @@ int main(int argc, char const *argv[])
             int factReturn = rfact(absReturn);
             printf("%08X\n", factReturn);
         }
-    index++;
-    num = input[index];
+        index++;
+        num = input[index];
     } while (num != 0);
     return 0;
 }
@@ -50,6 +50,6 @@ int rfact(int n) {
         return 1;
     }
     else {
-        return n*rfact(n - 1);
+        return mult(n, rfact(n - 1));
     }
 }
