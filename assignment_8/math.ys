@@ -92,6 +92,8 @@ rrmovl %ecx, %eax
 subl %eax, %ecx
 subl %eax, %ecx
 
+rrmovl %ecx, %eax
+
 popl %ebp
 ret # return itself minus 2*itself
 
@@ -123,7 +125,7 @@ subl %edx, %edi
 jne  multLoop
 
 endMult:
-pup %ebx
+popl %ebx
 popl %edi
 popl %ebp
 ret
@@ -137,7 +139,7 @@ mrmovl 8(%ebp), %ecx # grab parameter
 
 irmovl $1, %edx
 subl %ecx, %edx # if input = 1
-je recCall
+jne recCall
 
 irmovl $1, %eax
 
@@ -151,12 +153,14 @@ pushl %ecx # push input onto stack
 irmovl $1, %eax
 subl %eax, %ecx #decrement input
 
+pushl %ecx
 call rfact
 
 pushl %eax
 call mult
 
 # at this point eax has our output valud
+popl %ebp
 ret
 
 
