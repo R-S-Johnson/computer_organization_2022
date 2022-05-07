@@ -9,3 +9,9 @@ esi - offset for output
 edi - offset for input / bs in functions
 
 stack
+
+edi -> esi
+esi -> edi
+eax -> ecx
+ecx -. eax
+ebx -> esi
